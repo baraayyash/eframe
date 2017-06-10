@@ -10,19 +10,19 @@ import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.id.IdentifierGenerator;
 
-public class BillIdGenerator implements IdentifierGenerator {
+public class OutSideOrderIdGenerator implements IdentifierGenerator {
 
     @Override
     public Serializable generate(SessionImplementor session, Object object)
             throws HibernateException {
 
-        String prefix = "bil";
+        String prefix = "oso";
         Connection connection = session.connection();
 
         try {
             Statement statement=connection.createStatement();
 
-            ResultSet rs=statement.executeQuery("select count(bill_id) as Id from Bill");
+            ResultSet rs=statement.executeQuery("select count(out_side_order_id) as Id from OutSideOrder");
 
             if(rs.next())
             {

@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.eframe.service.BillService;
+import com.eframe.service.InvoiceService;
 import com.eframe.service.ClientService;
-import com.eframe.model.Bill;
+import com.eframe.model.Invoice;
 import com.eframe.model.Client;
 
 @RestController
@@ -21,7 +21,7 @@ public class ClientController {
 	@Autowired
 	ClientService clientService;
 	@Autowired
-	BillService billService;
+	InvoiceService billService;
 
 	/**
 	 *  test
@@ -39,11 +39,11 @@ public class ClientController {
 		client.setPhone("0599437784");
 		client = clientService.save(client);
 		
-		Bill bill = new Bill();
+		Invoice bill = new Invoice();
 		bill.setClient(client);
 		bill = billService.save(bill);
 
-		Set<Bill> bills = new HashSet<Bill>(); 
+		Set<Invoice> bills = new HashSet<Invoice>(); 
 		bills.add(bill);
 		
 		client.setBills(bills);

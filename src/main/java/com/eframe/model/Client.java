@@ -25,7 +25,7 @@ public class Client {
 	private String phone;
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
-	private Set<Bill> bills;
+	private Set<Invoice> invoices;
 	
 	public String getClientId() {
 		return clientId;
@@ -46,10 +46,10 @@ public class Client {
 		this.phone = phone;
 	}
 	
-	public Set<Bill> getBills() {
-		return bills;
+	public Set<Invoice> getInvoices() {
+		return invoices;
 	}
-	public void setBills(Set<Bill> bills) {
-		this.bills = bills;
+	public void setBills(Set<Invoice> invoices) {
+		this.invoices = invoices;
 	}
 }
