@@ -24,15 +24,20 @@ public class Product {
 	@GeneratedValue(generator = "product_id")  
 	@Column(name="product_id")
 	private String productId;
+
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "product_out_side_order", joinColumns = {
 			@JoinColumn(name = "product_id", nullable = false, updatable = false) },
-			inverseJoinColumns = { @JoinColumn(name = "out_side_order_id",
-					nullable = false, updatable = false) })
+	inverseJoinColumns = { @JoinColumn(name = "out_side_order_id",
+	nullable = false, updatable = false) })
 	private Set<OutSideOrder> outSideOrders;
+
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
 	private Set<ZoneProduct> zoneproducts;
+
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
 	private Set<ProductInvoice> productInvoice;
 
@@ -54,5 +59,4 @@ public class Product {
 	public void setOutSideOrders(Set<OutSideOrder> outSideOrders) {
 		this.outSideOrders = outSideOrders;
 	}
-
 }

@@ -14,14 +14,16 @@ import com.eframe.service.InvoiceService;
 import com.eframe.service.ClientService;
 import com.eframe.model.Invoice;
 import com.eframe.model.Client;
+import com.eframe.model.Debit;
 
 @RestController
 public class ClientController {
 	
 	@Autowired
 	ClientService clientService;
+	
 	@Autowired
-	InvoiceService billService;
+	InvoiceService invoiceService;
 
 	/**
 	 *  test
@@ -39,9 +41,9 @@ public class ClientController {
 		client.setPhone("0599437784");
 		client = clientService.save(client);
 		
-		Invoice bill = new Invoice();
+		Debit bill = new Debit("test");
 		bill.setClient(client);
-		bill = billService.save(bill);
+		bill = invoiceService.save(bill);
 
 		Set<Invoice> bills = new HashSet<Invoice>(); 
 		bills.add(bill);

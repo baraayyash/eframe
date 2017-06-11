@@ -21,11 +21,12 @@ public class ProductInvoice {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id")
 	private Product product;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "invoice_id")
 	private Invoice invoice;
 	private int qty;
-	
+
 	public Product getProduct() {
 		return product;
 	}

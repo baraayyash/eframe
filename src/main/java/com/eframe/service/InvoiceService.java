@@ -5,20 +5,33 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.eframe.Repository.InvoiceRepository;
-import com.eframe.model.Invoice;
+import com.eframe.Repository.CridetRepository;
+import com.eframe.Repository.DebitRepository;
+import com.eframe.model.Cridet;
+import com.eframe.model.Debit;
 
 @Service
 public class InvoiceService {
 
 	@Autowired
-	public InvoiceRepository invoiceRepository;
-	
-	public List<Invoice> findAll() {
-		return invoiceRepository.findAll();
+	public CridetRepository cridetRepository;
+
+	@Autowired
+	public DebitRepository debitRepository;
+
+	public List<Debit> getAllDebits() {
+		return debitRepository.findAll();
 	}
-	
-	public Invoice save(Invoice invoice) {
-		return invoiceRepository.save(invoice);
+
+	public Debit save(Debit debit) {
+		return debitRepository.save(debit);
+	}
+
+	public List<Cridet> getAllCridets() {
+		return cridetRepository.findAll();
+	}
+
+	public Cridet save(Cridet cridet) {
+		return cridetRepository.save(cridet);
 	}
 }
