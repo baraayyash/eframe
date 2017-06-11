@@ -1,4 +1,4 @@
-package com.eframe.service;
+package com.eframe.Repository;
 
 import java.util.List;
 
