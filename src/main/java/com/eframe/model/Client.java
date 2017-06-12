@@ -1,7 +1,9 @@
 package com.eframe.model;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,8 +26,8 @@ public class Client {
 	private String name;
 	private String phone;
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
-	private Set<Invoice> invoices;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "client", cascade=CascadeType.ALL)
+	private List<Invoice> invoices = new ArrayList<>();
 	
 	public String getClientId() {
 		return clientId;
@@ -46,10 +48,10 @@ public class Client {
 		this.phone = phone;
 	}
 	
-	public Set<Invoice> getInvoices() {
+	public List<Invoice> getInvoices() {
 		return invoices;
 	}
-	public void setBills(Set<Invoice> invoices) {
+	public void setInvoices(List<Invoice> invoices) {
 		this.invoices = invoices;
 	}
 }

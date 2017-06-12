@@ -1,58 +1,68 @@
 package com.eframe.controller;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.eframe.service.InvoiceService;
 import com.eframe.service.ClientService;
-import com.eframe.model.Invoice;
 import com.eframe.model.Client;
-import com.eframe.model.Debit;
 
 @RestController
 public class ClientController {
-	
+
 	@Autowired
 	ClientService clientService;
-	
-	@Autowired
-	InvoiceService invoiceService;
 
 	/**
-	 *  test
-	 * test
-	 * @param test
-	 * @param test
-	 * @return
+	 * Get all clients
+	 * 
+	 * @return List<Client>
 	 */
 	@RequestMapping(method = RequestMethod.GET ,value = "api/clients")
-    public ResponseEntity<List<Client>> test() {
-		
-		Client client = new Client();
-		
-		client.setName("bara");
-		client.setPhone("0599437784");
-		client = clientService.save(client);
-		
-		Debit bill = new Debit("test");
-		bill.setClient(client);
-		bill = invoiceService.save(bill);
-
-		Set<Invoice> bills = new HashSet<Invoice>(); 
-		bills.add(bill);
-		
-		client.setBills(bills);
-		
-		clientService.save(client);
-		
+	public ResponseEntity<List<Client>> getAll() {
 		return ResponseEntity.ok(clientService.findAll());
-    }
+	}
 
+	/**
+	 * Get one client
+	 * 
+	 * @param id
+	 * @return Client
+	 */
+	@RequestMapping(method = RequestMethod.GET ,value = "api/clients/{id}")
+	public ResponseEntity<Client> GetOne(@PathVariable("id") String id) {
+		return ResponseEntity.ok(clientService.findOne(id));
+	}
+
+	/**
+	 * Create Product
+	 * 
+	 * @param Client
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(method = RequestMethod.POST, value = "api/clients", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Client> create(@RequestBody Client client) {
+		return ResponseEntity.ok(clientService.save(client));
+	}
+
+	/**
+	 * Update existing product
+	 * 
+	 * @param Client
+	 * @return Client
+	 */
+	@ResponseBody
+	@RequestMapping(method = RequestMethod.PUT, value = "api/clients/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Client> update(@RequestBody Client client) {
+		return ResponseEntity.ok(clientService.save(client));
+	}
 }

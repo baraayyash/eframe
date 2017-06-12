@@ -27,11 +27,19 @@ public class InvoiceService {
 		return debitRepository.save(debit);
 	}
 
+	public Debit findDebit(String id) {
+		return debitRepository.findOne(id);
+	}
+
 	public List<Cridet> getAllCridets() {
 		return cridetRepository.findAll();
 	}
 
 	public Cridet save(Cridet cridet) {
 		return cridetRepository.save(cridet);
+	}
+
+	public Cridet findCridet(String id) {
+		return cridetRepository.findOne(id);
 	}
 }

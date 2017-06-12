@@ -11,14 +11,18 @@ import com.eframe.model.Client;
 
 @Service
 public class ClientService {
-	
+
 	@Autowired
 	private ClientRepository clientRepository;
-	
+
 	public List<Client> findAll() {
 		return clientRepository.findAll();
 	}
-	
+
+	public Client findOne(String id) {
+		return clientRepository.findOne(id);
+	}
+
 	public Client save(Client client) {
 		return clientRepository.save(client);
 	}

@@ -23,9 +23,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(
-	name="invoice_type", 
-	discriminatorType=DiscriminatorType.STRING
-	)
+		name="invoice_type", 
+		discriminatorType=DiscriminatorType.STRING
+		)
 public abstract class Invoice {
 
 	@Id
@@ -33,14 +33,19 @@ public abstract class Invoice {
 	@GeneratedValue(generator = "invoice_id")  
 	@Column(name="invoice_id")
 	private String invoiceId;
+
 	@Column(name = "date")
 	LocalDate date;
-	@ManyToOne(fetch = FetchType.LAZY)
+
+	@ManyToOne
 	@JoinColumn(name = "client_id", nullable = false)
-	Client client;
+	private Client client;
+
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "invoice")
 	private Set<RevisedPolicy> revisedPolicies;
+
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "invoice")
 	private Set<ProductInvoice> productInvoice;
 

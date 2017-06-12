@@ -14,6 +14,10 @@ public class ProductService {
 	@Autowired
 	public ProductRepository productRepository;
 
+	public Product findOne(String id) {
+		return productRepository.findOne(id);
+	}
+	
 	public List<Product> findAll() {
 		return productRepository.findAll();
 	}

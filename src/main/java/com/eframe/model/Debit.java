@@ -9,10 +9,6 @@ public class Debit extends Invoice {
 	
 	private String directPayment;
 
-	public Debit(String s) {
-		this.directPayment = s;
-	}
-	
 	public String getDirectPayment() {
 		return directPayment;
 	}
