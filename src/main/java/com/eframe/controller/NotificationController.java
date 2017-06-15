@@ -3,58 +3,47 @@ package com.eframe.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.eframe.model.Client;
-import com.eframe.model.Debit;
-import com.eframe.service.ClientService;
+import com.eframe.model.Notification;
+import com.eframe.service.NotificationService;
 
 @RestController
 public class NotificationController {
 	
 	@Autowired
-	ClientService clientService;
+	NotificationService notificationService;
 	
 	/**
-	 * Get all debits
+	 * Check for notifications
 	 * 
 	 * @return List<Client>
 	 */
-	@RequestMapping(method = RequestMethod.GET ,value = "/test")
-	public ResponseEntity<String> getAllDebits() {
+	@RequestMapping(method = RequestMethod.POST ,value = "/notifications")
+	public ResponseEntity<Long> check() {
 		while(true) {
-			
-			Client c = clientService.findOne("cli102");
-			
-		  if (c != null ) return ResponseEntity.ok("done");
-			  
-	           try {
-	                Thread.sleep(1000);
-	            } catch (InterruptedException e) {
-	                e.printStackTrace();
-	            }
+			Long notifCount = notificationService.countByIsPulled(false);
+			if (notifCount > 0) return ResponseEntity.ok(notifCount);
+			try {
+				Thread.sleep(1500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
-		
 	}
-	
+
 	/**
-	 * Get all debits
+	 * Get unPulled notifications
 	 * 
 	 * @return List<Client>
 	 */
-	@RequestMapping(method = RequestMethod.GET ,value = "/test1")
-	public ResponseEntity<String> test() {
-
-		for(int i = 0; i<3 ; i++) {
-			Client client = new Client();
-			clientService.save(client);
-		}
-		
-		return ResponseEntity.ok("test");
+	@RequestMapping(method = RequestMethod.GET ,value = "/notifications")
+	public ResponseEntity<List<Notification>> fetch() {
+		List<Notification> notifications = notificationService.findByIsPulled(false);
+		for( Notification notification : notifications) notification.setPulled(true);
+		return ResponseEntity.ok(notificationService.save(notifications));
 	}
-
 }

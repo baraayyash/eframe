@@ -12,7 +12,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class Notification {
 	@Id
-	@GenericGenerator(name = "notification", strategy = "com.eframe.model.generator.NotificationIdGenerator")
+	@GenericGenerator(name = "notification_id", strategy = "com.eframe.model.generator.NotificationIdGenerator")
 	@GeneratedValue(generator = "notification_id")  
 	@Column(name="notification_id")
 	private String notificationId;
