@@ -18,7 +18,7 @@ import com.eframe.model.Debit;
 import com.eframe.service.InvoiceService;
 
 @RestController
-@RequestMapping("/invoice")
+@RequestMapping("/api/invoice")
 public class InvoiceController {
 
 	@Autowired
@@ -29,7 +29,7 @@ public class InvoiceController {
 	 * 
 	 * @return List<Client>
 	 */
-	@RequestMapping(method = RequestMethod.GET ,value = "/api/debits")
+	@RequestMapping(method = RequestMethod.GET ,value = "/debits")
 	public ResponseEntity<List<Debit>> getAllDebits() {
 		return new ResponseEntity<List<Debit>>(invoiceService.getAllDebits(),HttpStatus.OK);
 	}
@@ -39,7 +39,7 @@ public class InvoiceController {
 	 * 
 	 * @return List<Client>
 	 */
-	@RequestMapping(method = RequestMethod.GET ,value = "/api/cridets")
+	@RequestMapping(method = RequestMethod.GET ,value = "/cridets")
 	public ResponseEntity<List<Cridet>> getAllCridets() {
 		return ResponseEntity.ok(invoiceService.getAllCridets());
 	}
@@ -50,7 +50,7 @@ public class InvoiceController {
 	 * @param id
 	 * @return Client
 	 */
-	@RequestMapping(method = RequestMethod.GET ,value = "/api/debits/{id}")
+	@RequestMapping(method = RequestMethod.GET ,value = "/debits/{id}")
 	public ResponseEntity<Debit> GetOneDebit(@PathVariable("id") String id) {
 		return ResponseEntity.ok(invoiceService.findDebit(id));
 	}
@@ -61,7 +61,7 @@ public class InvoiceController {
 	 * @param id
 	 * @return Client
 	 */
-	@RequestMapping(method = RequestMethod.GET ,value = "/api/cridets/{id}")
+	@RequestMapping(method = RequestMethod.GET ,value = "/cridets/{id}")
 	public ResponseEntity<Cridet> GetOneCridet(@PathVariable("id") String id) {
 		return ResponseEntity.ok(invoiceService.findCridet(id));
 	}
@@ -73,7 +73,7 @@ public class InvoiceController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(method = RequestMethod.POST, value = "/api/debits", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, value = "/debits", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Debit> createDebit(@RequestBody Debit debit) {
 		return ResponseEntity.ok(invoiceService.save(debit));
 	}
@@ -85,7 +85,7 @@ public class InvoiceController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(method = RequestMethod.POST, value = "/api/cridets", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, value = "/cridets", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Cridet> createCridet(@RequestBody Cridet cridet) {
 		return ResponseEntity.ok(invoiceService.save(cridet));
 	}
