@@ -31,7 +31,6 @@ public class ClientController {
 	@RequestMapping(method = RequestMethod.GET ,value = "api/clients")
 	public ResponseEntity<ListResponse> getAll(ListRequest request) {
 		Pageable pageable = new OffsetBasedPageRequest(request.getStart(), request.getLength());
-		System.out.println("---" + request.getDraw());
 		return ResponseEntity.ok(new ListResponse(clientService.findAll(pageable), request.getDraw()));
 	}
 

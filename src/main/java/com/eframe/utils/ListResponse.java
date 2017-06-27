@@ -17,7 +17,6 @@ public class ListResponse {
 	
 	public ListResponse(Page listData, int draw) {
 		this(listData);
-		System.out.println("++" + draw);
 		this.draw = draw;
 	}
 	
