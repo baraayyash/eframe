@@ -1,8 +1,7 @@
 package com.eframe.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.eframe.model.Cridet;
 import com.eframe.model.Debit;
 import com.eframe.service.InvoiceService;
+import com.eframe.utils.ListRequest;
+import com.eframe.utils.ListResponse;
+import com.eframe.utils.OffsetBasedPageRequest;
 
 @RestController
 @RequestMapping("/api/invoice")
@@ -28,10 +30,12 @@ public class InvoiceController {
 	 * Get all debits
 	 * 
 	 * @return List<Client>
+	 * @throws GenaricException 
 	 */
 	@RequestMapping(method = RequestMethod.GET ,value = "/debits")
-	public ResponseEntity<List<Debit>> getAllDebits() {
-		return new ResponseEntity<List<Debit>>(invoiceService.getAllDebits(),HttpStatus.OK);
+	public ResponseEntity<ListResponse> getAllDebits(ListRequest request) {
+		Pageable pageable = new OffsetBasedPageRequest(request.getStart(), request.getLength());
+		return new ResponseEntity<ListResponse>(new ListResponse(invoiceService.getAllDebits(pageable), request.getDraw()),HttpStatus.OK);
 	}
 	
 	/**
@@ -40,8 +44,9 @@ public class InvoiceController {
 	 * @return List<Client>
 	 */
 	@RequestMapping(method = RequestMethod.GET ,value = "/cridets")
-	public ResponseEntity<List<Cridet>> getAllCridets() {
-		return ResponseEntity.ok(invoiceService.getAllCridets());
+	public ResponseEntity<ListResponse> getAllCridets(ListRequest request) {
+		Pageable pageable = new OffsetBasedPageRequest(request.getStart(), request.getLength());
+		return ResponseEntity.ok(new ListResponse(invoiceService.getAllCridets(pageable), request.getDraw()));
 	}
 
 	/**

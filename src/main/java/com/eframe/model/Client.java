@@ -24,9 +24,10 @@ public class Client {
 	@Column(name="client_id")
 	private String clientId;
 	private String name;
+	@Column(unique=true)
 	private String phone;
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "client", cascade=CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "client", cascade = CascadeType.ALL)
 	private List<Invoice> invoices = new ArrayList<>();
 	
 	public String getClientId() {

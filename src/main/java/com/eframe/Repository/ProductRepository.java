@@ -1,8 +1,8 @@
 package com.eframe.Repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.eframe.model.Product;
 
-public interface ProductRepository extends JpaRepository<Product, String> {
+public interface ProductRepository extends PagingAndSortingRepository<Product, String> {
 }

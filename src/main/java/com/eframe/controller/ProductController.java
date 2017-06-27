@@ -1,8 +1,7 @@
 package com.eframe.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eframe.model.Product;
 import com.eframe.service.ProductService;
+import com.eframe.utils.ListRequest;
+import com.eframe.utils.ListResponse;
+import com.eframe.utils.OffsetBasedPageRequest;
 
 @RestController
 public class ProductController {
@@ -27,8 +29,9 @@ public class ProductController {
 	 * @return List<Product>
 	 */
 	@RequestMapping(method = RequestMethod.GET ,value = "api/products")
-	public ResponseEntity<List<Product>> getAll() {
-		return ResponseEntity.ok(productService.findAll());
+	public ResponseEntity<ListResponse> getAll(ListRequest request) {
+		Pageable pageable = new OffsetBasedPageRequest(request.getStart(), request.getLength());
+		return ResponseEntity.ok(new ListResponse(productService.findAll(pageable), request.getDraw()));
 	}
 
 	/**

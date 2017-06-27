@@ -36,7 +36,7 @@ public abstract class Invoice {
 
 	@Column(name = "date")
 	LocalDate date;
-
+	
 	@ManyToOne
 	@JoinColumn(name = "client_id", nullable = false)
 	private Client client;

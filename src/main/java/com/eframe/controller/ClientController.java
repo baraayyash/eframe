@@ -1,8 +1,7 @@
 package com.eframe.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eframe.service.ClientService;
+import com.eframe.utils.ListRequest;
+import com.eframe.utils.ListResponse;
+import com.eframe.utils.OffsetBasedPageRequest;
 import com.eframe.model.Client;
 
 @RestController
@@ -27,8 +29,10 @@ public class ClientController {
 	 * @return List<Client>
 	 */
 	@RequestMapping(method = RequestMethod.GET ,value = "api/clients")
-	public ResponseEntity<List<Client>> getAll() {
-		return ResponseEntity.ok(clientService.findAll());
+	public ResponseEntity<ListResponse> getAll(ListRequest request) {
+		Pageable pageable = new OffsetBasedPageRequest(request.getStart(), request.getLength());
+		System.out.println("---" + request.getDraw());
+		return ResponseEntity.ok(new ListResponse(clientService.findAll(pageable), request.getDraw()));
 	}
 
 	/**
